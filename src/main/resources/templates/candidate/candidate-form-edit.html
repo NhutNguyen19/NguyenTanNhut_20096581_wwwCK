@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Candidate</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Edit Candidate</h1>
+    <form th:action="@{/candidates/update}" th:object="${candidate}" method="post">
+        <div class="row">
+            <!-- Candidate Information -->
+            <div class="col-md-6">
+                <h3>Candidate Information</h3>
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" th:field="*{fullName}" id="fullName" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" th:field="*{email}" id="email" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" th:field="*{dob}" id="dob" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" th:field="*{phone}" id="phone" class="form-control" required/>
+                </div>
+            </div>
+
+            <!-- Address Information -->
+            <div class="col-md-6">
+                <h3>Address Information</h3>
+                <div class="form-group">
+                    <label for="number">Number:</label>
+                    <input type="text" th:field="*{address.number}" id="number" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="street">Street:</label>
+                    <input type="text" th:field="*{address.street}" id="street" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" th:field="*{address.city}" id="city" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select th:field="*{address.country}" id="country" class="form-control" required>
+                        <option value="1">Country 1</option>
+                        <option value="2">Country 2</option>
+                        <option value="3">Country 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">ZIP Code:</label>
+                    <input type="text" th:field="*{address.zipcode}" id="zipcode" class="form-control" required/>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Save</button>
+    </form>
+    <a href="/api/candidates" class="btn btn-secondary mt-3">Back to Candidate List</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

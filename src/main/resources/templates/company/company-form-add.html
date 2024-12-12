@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Company Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Add New Company</h1>
+    <form th:action="@{/companies}" th:object="${company}" method="post">
+        <div class="row">
+            <!-- Company Information -->
+            <div class="col-md-6">
+                <h3>Company Information</h3>
+                <div class="form-group">
+                    <label for="compName">Company Name:</label>
+                    <input type="text" th:field="*{compName}" id="compName" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" th:field="*{email}" id="email" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" th:field="*{phone}" id="phone" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="about">About:</label>
+                    <textarea th:field="*{about}" id="about" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="webUrl">Website URL:</label>
+                    <input type="url" th:field="*{webUrl}" id="webUrl" class="form-control"/>
+                </div>
+            </div>
+
+            <!-- Address Information -->
+            <div class="col-md-6">
+                <h3>Address Information</h3>
+                <div class="form-group">
+                    <label for="number">Number:</label>
+                    <input type="text" th:field="*{address.number}" id="number" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="street">Street:</label>
+                    <input type="text" th:field="*{address.street}" id="street" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" th:field="*{address.city}" id="city" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select th:field="*{address.country}" id="country" class="form-control" required>
+                        <option value="Viet Nam">Viet Nam</option>
+                        <option value="Thai Lan">Thai Lan</option>
+                        <option value="Nhat Ban">Nhat Ban</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">ZIP Code:</label>
+                    <input type="text" th:field="*{address.zipcode}" id="zipcode" class="form-control" required/>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Save</button>
+    </form>
+    <a href="/api/companies" class="btn btn-secondary mt-3">Back to Company List</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
