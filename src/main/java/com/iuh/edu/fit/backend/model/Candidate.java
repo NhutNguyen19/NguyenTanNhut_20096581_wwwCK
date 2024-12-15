@@ -21,6 +21,9 @@ public class Candidate {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "phone", nullable = false, length = 15)
     private String phone;
 
@@ -84,6 +87,14 @@ public class Candidate {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
