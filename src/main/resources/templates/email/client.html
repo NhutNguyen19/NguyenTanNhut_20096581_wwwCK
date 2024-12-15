@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            color: #333333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .content {
+            line-height: 1.6;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Xin chào, ${name}</h1>
+    </div>
+    <div class="content">
+        <p>Thông báo gửi thông tin truy cập</p>
+        <p th:text="${'Xin chào, '+ name}"></p>
+        <p th:text="${'Tên truy cập, '+ email }"></p>
+        <p>Chúng tôi mời bạn tham gia chương trình thực tập của công ty chúng tôi. </p>
+    </div>
+    <div class="footer">
+        <p>Company Name, 1234 Street, Ho Chi Minh City, Viet Nam, </p>
+        <p><a href="https://your-website.com/unsubscribe">Hủy đăng ký</a> email này</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Company Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Company Profile</h1>
+    <div class="card">
+        <div class="card-header">
+            Company Details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Company Information</h5>
+            <p class="card-text">
+                <strong>ID:</strong> <span th:text="${company.id}"></span><br>
+                <strong>Name:</strong> <span th:text="${company.compName}"></span><br>
+                <strong>Email:</strong> <span th:text="${company.email}"></span><br>
+                <strong>Phone:</strong> <span th:text="${company.phone}"></span><br>
+                <strong>About:</strong> <span th:text="${company.about}"></span><br>
+                <strong>Website URL:</strong> <span th:text="${company.webUrl}"></span><br>
+                <strong>Address:</strong>
+                <span th:text="${company.address.number + ', ' + company.address.street + ', ' + company.address.city + ', ' + company.address.zipcode + ', ' + company.address.country}"></span>
+            </p>
+            <a href="/companies" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

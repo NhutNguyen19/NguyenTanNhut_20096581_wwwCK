@@ -1,20 +1,25 @@
 package com.iuh.edu.fit.backend.controller;
 
+import com.iuh.edu.fit.backend.dto.DataMailDTO;
 import com.iuh.edu.fit.backend.model.Address;
+import com.iuh.edu.fit.backend.model.Candidate;
 import com.iuh.edu.fit.backend.model.Company;
+import com.iuh.edu.fit.backend.model.JobSkill;
 import com.iuh.edu.fit.backend.repository.AddressRepository;
 import com.iuh.edu.fit.backend.repository.CompanyRepository;
-import com.iuh.edu.fit.backend.service.company.CompanyService;
+import com.iuh.edu.fit.backend.service.candidate.ICandidateService;
 import com.iuh.edu.fit.backend.service.company.ICompanyService;
+import com.iuh.edu.fit.backend.service.email.IMailService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,6 +34,10 @@ public class CompanyController {
     private CompanyRepository companyRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private ICandidateService candidateService;
+    @Autowired
+    private IMailService mailService;
 
     @GetMapping("/new")
     public String showNewCompanyForm(Model model) {
@@ -63,7 +72,7 @@ public class CompanyController {
     }
 
     @GetMapping("/show-edit-form/{id}")
-    public ModelAndView edit(@PathVariable("id") long id){
+    public ModelAndView edit(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
         Optional<Company> opt = companyRepository.findById(id);
         if (opt.isPresent()) {
@@ -77,7 +86,7 @@ public class CompanyController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("company") Company company,
-                         @ModelAttribute("address") Address address ){
+                         @ModelAttribute("address") Address address) {
         addressRepository.save(address);
         companyRepository.save(company);
         return "redirect:/companies";
@@ -89,25 +98,32 @@ public class CompanyController {
         return "redirect:/companies";
     }
 
-//    @GetMapping("/search")
-//    public String searchCompanies(@RequestParam("name") String name, Model model,
-//                                  @RequestParam(value = "page", defaultValue = "1") int page,
-//                                  @RequestParam(value = "size", defaultValue = "10") int size) {
-//        Page<Company> companyPage = companyRepository.findByFullNameContainingIgnoreCase(name,
-//                PageRequest.of(page, size));
-//        model.addAttribute("companyPage", companyPage);
-//        int totalPages = companyPage.getTotalPages();
-//        if (totalPages > 0) {
-//            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-//            model.addAttribute("pageNumbers", pageNumbers);
-//        }
-//        return "company/list";
-//    }
-
     @GetMapping("/{id}")
     public String getCompanyProfile(@PathVariable Long id, Model model) {
-        Company company = companyRepository.findById(id) .orElseThrow(() -> new IllegalArgumentException("Invalid company Id:" + id));
+        Company company = companyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid company Id:" + id));
         model.addAttribute("company", company);
         return "company/company-profile";
+    }
+
+    @GetMapping("/findCandidates")
+    public String findCandidatesForm(Model model) {
+        model.addAttribute("skills", "");
+        return "findCandidates";
+    }
+
+    @PostMapping("/sendInvitations")
+    public String sendInvitations(@RequestParam List<String> candidateEmails) {
+        DataMailDTO dataMailDTO = new DataMailDTO();
+        for (String email : candidateEmails) {
+            dataMailDTO.setTo(email);
+            dataMailDTO.setSubject("Job Opportunity");
+            dataMailDTO.setProps(Map.of("message", "We found a job that matches your skills!"));
+            try {
+                mailService.sendInvitationEmail(dataMailDTO, "invitationTemplate");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        }
+        return "redirect:/companies/findCandidates";
     }
 }

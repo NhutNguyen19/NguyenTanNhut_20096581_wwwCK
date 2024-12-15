@@ -2,6 +2,7 @@ package com.iuh.edu.fit.backend.service.candidate;
 
 import com.iuh.edu.fit.backend.model.Address;
 import com.iuh.edu.fit.backend.model.Candidate;
+import com.iuh.edu.fit.backend.model.JobSkill;
 import com.iuh.edu.fit.backend.repository.AddressRepository;
 import com.iuh.edu.fit.backend.repository.CandidateRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,8 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class CandidateService implements ICandidateService{
+public class CandidateService implements ICandidateService {
 
     @Autowired
     private CandidateRepository candidateRepository;
@@ -26,7 +29,8 @@ public class CandidateService implements ICandidateService{
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         PageRequest pageRequest = PageRequest.of(page, size, sort);
-        return candidateRepository.findAll(pageRequest); }
+        return candidateRepository.findAll(pageRequest);
+    }
 
     @Override
     public Candidate getCandidateById(Long id) {
@@ -47,4 +51,5 @@ public class CandidateService implements ICandidateService{
                 .orElseThrow(() -> new EntityNotFoundException("Candidate not found"));
         candidateRepository.delete(candidate);
     }
+
 }
